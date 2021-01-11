@@ -7,7 +7,7 @@ public class App {
         Placar p2 = new Placar ("São Paulo", "Palmeiras");
         Placar p3 = new Placar ("São Paulo", "Palmeiras", 3, 2);
 
-        System.out.println(p1);
+        System.out.println(p1); //p1.toString()
         System.out.println(p2);
         System.out.println(p3);
     }
