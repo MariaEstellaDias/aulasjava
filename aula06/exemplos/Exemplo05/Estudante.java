@@ -1,4 +1,4 @@
-package exercicios.exercicio02;
+package exemplos.Exemplo05;
 
 public class Estudante extends Pessoa {
     private String curso;

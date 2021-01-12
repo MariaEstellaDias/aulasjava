@@ -16,6 +16,7 @@ public class App {
         //System.out.println("Salário do gerente: " + g.getSalario());
 
         System.out.println(f);
+        System.out.println(f2);
         System.out.println(g);
 
     }

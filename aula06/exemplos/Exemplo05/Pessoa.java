@@ -1,4 +1,4 @@
-package exercicios.exercicio02;
+package exemplos.Exemplo05;
 
 public abstract class Pessoa { //classe abstrata não instancia objeto.
     private String nome, telefone;
