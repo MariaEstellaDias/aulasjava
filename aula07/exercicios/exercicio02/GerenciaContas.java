@@ -1,53 +1,52 @@
 package exercicios.exercicio02;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GerenciaContas {
-    private ArrayList<Conta> contas;
+    private HashMap<Integer, Conta> contas;
 
     public GerenciaContas() {
-        contas = new ArrayList<>();
+        contas = new HashMap<>();
     }
 
     public void novaContaCorrente(int numeroConta) {
         // ContaCorrente cc = new ContaCorrente(numeroConta);
         // contas.add(cc);
-        contas.add(new ContaCorrente(numeroConta));
+        contas.put(numeroConta, new ContaCorrente(numeroConta));
     }
 
     public void novaContaEspecial(int numeroConta, double limite) {
-        contas.add(new ContaEspecial(numeroConta, limite));
+        contas.put(numeroConta, new ContaEspecial(numeroConta, limite));
     }
 
     public void novaContaPoupanca(int numeroConta) {
-        contas.add(new ContaPoupanca(numeroConta));
+        contas.put(numeroConta, new ContaPoupanca(numeroConta));
     }
 
     public String consultaSaldo(int numeroConta) {
-        for (Conta item: contas) {
-            if (item.getNumero() == numeroConta) {
-                return item.toString();
-            }
+        Conta c = contas.get(numeroConta);
+
+        if (c != null) {
+            return c.toString();
         }
 
         return "Conta não encontrada";
     }
 
     public boolean sacar(int numeroConta, double valor) {
-        for (Conta conta : contas) {
-            if (conta.getNumero() == numeroConta) {
-                conta.sacar(valor);
-            }
+        Conta c = contas.get(numeroConta);
+        if (c != null) {
+            return c.sacar(valor);
         }
-        return false; //não encontrou a conta
+        return false; // não encontrou a conta
     }
 
     public boolean depositar(int numeroConta, double valor) {
-        for (Conta conta : contas) {
-            if (conta.getNumero() == numeroConta) {
-                return conta.depositar(valor);
-            }
+        Conta c = contas.get(numeroConta);
+        if (c != null) {
+            return c.depositar(valor);
         }
-        return false;
+        return false; // não encontrou a conta
     }
 }
