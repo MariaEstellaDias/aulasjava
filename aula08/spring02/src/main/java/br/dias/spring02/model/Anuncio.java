@@ -5,10 +5,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity // classe será mapeada no banco de dados
 @Table(name = "anuncio")
+@Getter
+@Setter
 public class Anuncio {
     @Id // chave primária
     @GeneratedValue(strategy = GenerationType.IDENTITY) // gerar numeração sequencial - 1, 2, 3....
@@ -21,28 +30,11 @@ public class Anuncio {
     @Column(name = "valor", nullable = false)
     private double valor;
 
-    public int getId() {
-        return id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "iduser") //nome da coluna na tabela 
+    @JsonIgnoreProperties("anuncios") // atributo do User que não deve ser preenchido
+    private User usuario;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public double getValor() {
-        return valor;
-    }
-
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
+    
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import br.dias.spring02.model.User;
 import br.dias.spring02.repository.UserRepo;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/user")
 public class UserController {
 
@@ -62,13 +64,48 @@ public class UserController {
 
     @PostMapping("/update")
     public ResponseEntity<User> atualizaUsuario(@RequestBody User user) {
-        if(user.getId() > 0) {
+        if (user.getId() > 0) {
             User newUser = repo.save(user);
             return ResponseEntity.ok(newUser);
-        }     
+        }
 
-       return ResponseEntity.status(400).build(); //400 = Bad Request
+        return ResponseEntity.status(400).build(); // 400 = Bad Request
     }
 
-  
+    @PostMapping("/email")
+    public ResponseEntity<UserDTO> buscaPorEmail(@RequestBody String email) {
+        User user = repo.findByEmail(email);
+
+        if (user != null) {
+            UserDTO userDTO = new UserDTO(user);
+            return ResponseEntity.ok(userDTO);
+
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/loginemail")
+    public ResponseEntity<User> loginPorEmail(@RequestBody User user) {
+        User userFinded = repo.findByEmailAndPassword(user.getEmail(), user.getPassword());
+
+        if (userFinded != null) {
+            return ResponseEntity.ok(userFinded);
+
+        }
+        return ResponseEntity.status(401).build();
+
+    }
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody User user){
+        User userFinded = repo.findByEmailOrCpf(user.getEmail(), user.getCpf());
+
+        if(userFinded != null){
+            if(userFinded.getPassword().equals(user.getPassword())){
+                return ResponseEntity.ok(userFinded);
+            }
+            return ResponseEntity.status(401).build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }

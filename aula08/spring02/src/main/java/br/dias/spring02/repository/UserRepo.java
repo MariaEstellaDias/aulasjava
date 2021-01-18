@@ -6,5 +6,7 @@ import br.dias.spring02.model.User;
 
 // CRUD - Create, Read, Update, Delete
 public interface UserRepo extends CrudRepository<User, Integer> {
-        
+    public User findByEmail(String email);
+    public User findByEmailAndPassword(String email, String password);
+    public User findByEmailOrCpf(String email, String cpf);
 }
